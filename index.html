@@ -2,23 +2,742 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moodify — African Music, Elevated</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-  />
+    :root {
+      --bg-main: #0F1117;
+      --bg-card: #161820;
+      --bg-card-soft: #232735;
+      --accent: #5865F2;
+      --accent-hover: #4752C4;
+      --accent-soft: rgba(88,101,242,0.12);
+      --text-main: #E4E6EB;
+      --text-muted: #9CA3AF;
+      --text-faint: #4B5563;
+      --border: rgba(255,255,255,0.08);
+      --border-soft: rgba(255,255,255,0.05);
+    }
 
-  <link rel="stylesheet" href="style/style.css" />
-  <title>Moodify</title>
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(15,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text-main); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--accent-hover); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 4rem;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(88,101,242,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-soft);
+      border: 0.5px solid rgba(88,101,242,0.3);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #818CF8;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #818CF8;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 1.25rem;
+      max-width: 800px;
+    }
+
+    .hero-title-accent { color: var(--accent); }
+
+    .hero-subtitle {
+      font-size: clamp(15px, 2vw, 18px);
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .stat-divider {
+      width: 0.5px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* ── FEATURED ARTIST ── */
+    .featured-section {
+      padding: 4rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .featured-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .featured-cover {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #5865F2, #8B5CF6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .featured-info { flex: 1; min-width: 180px; }
+
+    .featured-tag {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .featured-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .featured-artist {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .featured-genre {
+      display: inline-block;
+      background: var(--bg-card-soft);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .play-btn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.08);
+    }
+
+    /* ── FEATURES ── */
+    .features-section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(88,101,242,0.3);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-soft);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOR ARTISTS ── */
+    .artists-section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .artists-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .artist-perk {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .perk-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .perk-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .perk-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 5rem 1.5rem;
+      text-align: center;
+    }
+
+    .cta-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 24px;
+      padding: 4rem 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(88,101,242,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-faint);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--text-muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .artists-grid { grid-template-columns: 1fr; }
+      .stat-divider { display: none; }
+    }
+  </style>
 </head>
-
 <body>
-  <h1>Moodify</h1>
 
-  <div class="login-container">
-    <a href="/home/login.html" class="btn ghost">Login</a>
-    <a href="/home/signup.html" class="btn primary">Signup</a>
-  </div>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18V5l12-2v13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="18" r="3" stroke="white" stroke-width="2"/>
+          <circle cx="18" cy="16" r="3" stroke="white" stroke-width="2"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Moodify</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#artists" class="nav-link">For Artists</a>
+      <a href="/home/login.html" class="nav-link">Sign in</a>
+      <a href="/home/signup.html" class="nav-cta">Get started</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Built for African music lovers
+    </div>
+    <h1 class="hero-title">
+      Music that knows<br/>
+      <span class="hero-title-accent">your vibe</span>
+    </h1>
+    <p class="hero-subtitle">
+      AI-powered streaming built for African artists and listeners.
+      Full access, real recommendations, zero restrictions.
+    </p>
+    <div class="hero-btns">
+      <a href="signup.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        Start listening free
+      </a>
+      <a href="signup.html" class="btn-secondary">Join as artist</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">AI</div>
+        <div class="stat-label">Powered recommendations</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Full playlist access</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-number">🇳🇬</div>
+        <div class="stat-label">Built in Nigeria</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTIST -->
+  <section class="featured-section">
+    <div class="section-label">Now Trending</div>
+    <h2 class="section-title">Featured Artist</h2>
+    <div class="featured-card">
+      <div class="featured-cover">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/>
+          <circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/>
+        </svg>
+      </div>
+      <div class="featured-info">
+        <div class="featured-tag">Featured Artist</div>
+        <div class="featured-title">Turbulence 🔥</div>
+        <div class="featured-artist">Asake ft Wizkid</div>
+        <span class="featured-genre">Afrobeats</span>
+      </div>
+      <button class="play-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" id="features">
+    <div class="section-label">Why Moodify</div>
+    <h2 class="section-title">Everything music should be</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5865F2" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+        </div>
+        <div class="feature-title">AI Recommendations</div>
+        <div class="feature-desc">Smart suggestions that actually understand African music culture and your personal taste.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5865F2" stroke-width="2">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </div>
+        <div class="feature-title">Full Playlist Access</div>
+        <div class="feature-desc">No freemium limits. Access every playlist, every song, every time. No restrictions.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5865F2" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="feature-title">Artist Discovery</div>
+        <div class="feature-desc">Find upcoming Nigerian and African artists before they blow. Support real talent early.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5865F2" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="feature-title">Works Everywhere</div>
+        <div class="feature-desc">Lock screen controls, background play, mobile and desktop. Music that follows you.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR ARTISTS -->
+  <section class="artists-section" id="artists">
+    <div class="section-label">For Creators</div>
+    <h2 class="section-title">Built for upcoming artists 🎤</h2>
+    <div class="artists-grid">
+      <div class="artist-perk">
+        <div class="perk-dot"></div>
+        <div>
+          <div class="perk-title">Upload your music</div>
+          <div class="perk-desc">Share your songs directly with listeners who care about your genre.</div>
+        </div>
+      </div>
+      <div class="artist-perk">
+        <div class="perk-dot"></div>
+        <div>
+          <div class="perk-title">Real analytics</div>
+          <div class="perk-desc">See exactly who's listening, where they're from, and what they replay.</div>
+        </div>
+      </div>
+      <div class="artist-perk">
+        <div class="perk-dot"></div>
+        <div>
+          <div class="perk-title">Get promoted</div>
+          <div class="perk-desc">Feature your songs on the homepage and reach new listeners fast.</div>
+        </div>
+      </div>
+      <div class="artist-perk">
+        <div class="perk-dot"></div>
+        <div>
+          <div class="perk-title">Verified badge</div>
+          <div class="perk-desc">Build credibility with a verified artist profile that fans trust.</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 1.5rem;">
+      <a href="/home/signup.html" class="btn-primary">Join as an artist</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-card">
+      <div class="cta-glow"></div>
+      <h2 class="cta-title">Your sound.<br/>Your platform.</h2>
+      <p class="cta-sub">Join Moodify and experience African music the way it was meant to be heard.</p>
+      <a href="/home/signup.html" class="btn-primary">
+        Create free account
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Moodify</div>
+    <div class="footer-text">Built in Edo State, Nigeria 🇳🇬</div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+  </footer>
+
 </body>
 </html>
