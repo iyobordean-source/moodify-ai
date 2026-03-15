@@ -1,0 +1,211 @@
+:root {
+  --bg-main: #0F1117;
+  --bg-card-soft: #232735;
+  --accent: #5865F2;
+  --text-main: #E4E6EB;
+  --text-muted: #9CA3AF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* NAV */
+.mood-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--bg-card-soft);
+  border-bottom: 1px solid #333;
+}
+
+.mood-nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.mood-nav li {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mood-nav li:hover {
+  color: var(--accent);
+}
+
+.mood-gbt-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* APP */
+.app {
+  padding: 2rem;
+}
+
+.music-panel {
+  width: 100%;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* GRIDS */
+.music-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.row-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.column-grid {
+  grid-template-columns: 1fr;
+}
+
+/* MUSIC CARD */
+.music-card {
+  background: var(--bg-card-soft);
+  border-radius: 12px;
+  padding: 0.6rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.music-card:hover {
+  transform: translateY(-4px);
+}
+
+.music-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.song-title {
+  font-weight: 600;
+}
+
+.song-artist {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+/* ===========================
+   MOBILE & TABLET RESPONSIVE
+=========================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .mood-nav {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .mood-nav ul {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .app {
+    padding: 1.5rem;
+  }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+  .mood-nav {
+    padding: 1rem;
+  }
+
+  .mood-nav ul {
+    gap: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .mood-gbt-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  /* Top Hits grid becomes 2 columns */
+  .row-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Column list spacing */
+  .column-grid .music-card {
+    padding: 0.8rem;
+  }
+
+  .music-card img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .mood-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mood-nav ul {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mood-gbt-btn {
+    width: 100%;
+    margin-top: 0.8rem;
+  }
+
+  /* Single column for Top Hits */
+  .row-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music-card {
+    flex-direction: row;
+  }
+
+  .music-card img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .song-title {
+    font-size: 0.95rem;
+  }
+
+  .song-artist {
+    font-size: 0.8rem;
+  }
+}
