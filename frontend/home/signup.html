@@ -205,7 +205,6 @@
     .signup-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
-      transform: none;
     }
 
     .divider {
@@ -295,14 +294,14 @@
       </div>
 
       <div class="role-tabs">
-        <button class="role-tab active" id="listenerTab" onclick="switchRole('listener')">
+        <button class="role-tab active" id="listenerTab" onclick="switchRole('listener')" type="button">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 18v-6a9 9 0 0118 0v6"/>
             <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>
           </svg>
           Join as Listener
         </button>
-        <button class="role-tab" id="artistTab" onclick="switchRole('artist')">
+        <button class="role-tab" id="artistTab" onclick="switchRole('artist')" type="button">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 18V5l12-2v13"/>
             <circle cx="6" cy="18" r="3"/>
@@ -314,13 +313,13 @@
 
       <div class="field-group">
         <label class="field-label">Full name</label>
-        <input type="text" class="field-input" id="nameInput" placeholder="Dean Okonkwo" />
+        <input type="text" class="field-input" id="nameInput" placeholder="Steven Okonkwo" />
         <div class="error-msg" id="nameError">Please enter your name</div>
       </div>
 
       <div class="field-group">
         <label class="field-label">Email address</label>
-        <input type="email" class="field-input" id="emailInput" placeholder="dean@email.com" />
+        <input type="email" class="field-input" id="emailInput" placeholder="steven@email.com" />
         <div class="error-msg" id="emailError">Please enter a valid email</div>
       </div>
 
@@ -350,7 +349,7 @@
         </select>
       </div>
 
-      <button class="signup-btn" id="signupBtn" onclick="handleSignup()">
+      <button class="signup-btn" id="signupBtn" type="button">
         Create account
       </button>
 
@@ -360,7 +359,7 @@
         <div class="divider-line"></div>
       </div>
 
-      <button class="google-btn">
+      <button class="google-btn" type="button">
         <svg width="16" height="16" viewBox="0 0 24 24">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
           <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -381,90 +380,6 @@
     </div>
   </div>
 
-  <script>
-    let currentRole = 'listener';
-
-    function switchRole(role) {
-      currentRole = role;
-      const listenerTab = document.getElementById('listenerTab');
-      const artistTab = document.getElementById('artistTab');
-      const artistFields = document.querySelectorAll('.artist-field');
-      const btn = document.getElementById('signupBtn');
-
-      if (role === 'artist') {
-        artistTab.classList.add('active');
-        listenerTab.classList.remove('active');
-        artistFields.forEach(f => f.classList.add('visible'));
-        btn.textContent = 'Create artist account';
-      } else {
-        listenerTab.classList.add('active');
-        artistTab.classList.remove('active');
-        artistFields.forEach(f => f.classList.remove('visible'));
-        btn.textContent = 'Create account';
-      }
-    }
-
-    function showError(id, show) {
-      document.getElementById(id).style.display = show ? 'block' : 'none';
-    }
-
-    function handleSignup() {
-      const name = document.getElementById('nameInput').value.trim();
-      const email = document.getElementById('emailInput').value.trim();
-      const password = document.getElementById('passwordInput').value;
-      let valid = true;
-
-      if (!name) { showError('nameError', true); valid = false; }
-      else showError('nameError', false);
-
-      if (!email || !email.includes('@')) { showError('emailError', true); valid = false; }
-      else showError('emailError', false);
-
-      if (password.length < 8) { showError('passwordError', true); valid = false; }
-      else showError('passwordError', false);
-
-      if (!valid) return;
-
-      const btn = document.getElementById('signupBtn');
-      btn.textContent = 'Creating account...';
-      btn.disabled = true;
-
-      // ─── CONNECT FIREBASE HERE ───────────────────────────
-      // firebase.auth()
-      //   .createUserWithEmailAndPassword(email, password)
-      //   .then(async (userCred) => {
-      //     await firebase.firestore()
-      //       .collection('users')
-      //       .doc(userCred.user.uid)
-      //       .set({
-      //         name,
-      //         email,
-      //         role: currentRole,
-      //         verified: false,
-      //         createdAt: new Date()
-      //       });
-      //     await userCred.user.sendEmailVerification();
-      //     document.getElementById('successBanner').style.display = 'block';
-      //     btn.disabled = false;
-      //     btn.textContent = currentRole === 'artist'
-      //       ? 'Create artist account' : 'Create account';
-      //   })
-      //   .catch(err => {
-      //     console.error(err.message);
-      //     btn.disabled = false;
-      //     btn.textContent = currentRole === 'artist'
-      //       ? 'Create artist account' : 'Create account';
-      //   });
-      // ─────────────────────────────────────────────────────
-
-      // Remove this timeout once Firebase is connected 👇
-      setTimeout(() => {
-        document.getElementById('successBanner').style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = currentRole === 'artist'
-          ? 'Create artist account' : 'Create account';
-      }, 1500);
-    }
-  </script>
+  <script type="module" src="../script/signup.js"></script>
 </body>
 </html>
