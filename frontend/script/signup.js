@@ -127,7 +127,7 @@ const handleGoogleSignup = async () => {
       await saveUserToFirestore(user);
     }
 
-    window.location.href = './moodify.html';
+    window.location.href = '../moodify.html';
 
   } catch (err) {
     console.error(err);

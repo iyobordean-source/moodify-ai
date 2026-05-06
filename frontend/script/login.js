@@ -23,7 +23,7 @@ const handleEmailLogin = async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = './moodify.html';
+    window.location.href = '../moodify.html';
 
   } catch (err) {
     // deliberately vague — don't tell attackers which part was wrong
@@ -42,7 +42,7 @@ const handleEmailLogin = async (e) => {
 const handleGoogleLogin = async () => {
   try {
     await signInWithPopup(auth, googleProvider);
-    window.location.href = './moodify.html';
+    window.location.href = '../moodify.html';
 
   } catch (err) {
     errorDisplay.textContent = 'Google sign in failed. Try again.';
