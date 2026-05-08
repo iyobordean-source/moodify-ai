@@ -1,5 +1,5 @@
 // signup.js
-import { auth, db, googleProvider } from '../.env/firebase.js';
+import { auth, db, googleProvider } from './firebase.js';
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
